@@ -1,4 +1,4 @@
-{% set version = "1.9-15" %}
+{% set version = "1.9-16" %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -10,11 +10,11 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/ptw_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/ptw/ptw_{{ version }}.tar.gz
-  sha256: 22fa003f280bc000f46bca88d69bf332b29bc68435115ba8044533b70bfb7b46
+  sha256: 7e87c34b9eeaeabe3bfb937162e6cda4dd48d6bd6a97b9db8bb8303d131caa66
 
 build:
-  merge_build_host: True  # [win]
-  number: 1
+  merge_build_host: true  # [win]
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
@@ -28,13 +28,14 @@ requirements:
     - {{ posix }}sed               # [win]
     - {{ posix }}coreutils         # [win]
     - {{ posix }}zip               # [win]
+    - cross-r-base {{ r_base }}    # [build_platform != target_platform]
   host:
     - r-base
-    - r-nloptr
+    - r-rcppde
   run:
     - r-base
     - {{ native }}gcc-libs         # [win]
-    - r-nloptr
+    - r-rcppde
 
 test:
   commands:
@@ -43,17 +44,12 @@ test:
 
 about:
   home: https://CRAN.R-project.org/package=ptw
-  license: GPL (>= 2)
-  summary: 'Parametric Time Warping aligns patterns, i.e. it aims to put corresponding features
-    at the same locations. The algorithm searches for an optimal polynomial describing
-    the warping. It is possible to align one sample to a reference, several samples
-    to the same reference, or several samples to several references. One can choose
-    between calculating individual warpings, or one global warping for a set of samples
-    and one reference. Two optimization criteria are implemented: RMS (Root Mean Square
-    error) and WCC (Weighted Cross Correlation). Both warping of peak profiles and of
-    peak lists are supported.'
+  license: GPL-2.0-or-later
+  summary: 'Parametric Time Warping aligns patterns, i.e. it aims to put corresponding features at the same locations. The algorithm searches for an optimal polynomial describing the warping. It is possible to align one sample to a reference, several samples to the same reference, or several samples to several references.
+    One can choose between calculating individual warpings, or one global warping for a set of samples and one reference. Two optimization criteria are implemented: RMS (Root Mean Square error) and WCC (Weighted Cross Correlation). Both warping of peak profiles and of peak lists are supported.'
   license_family: GPL3
-  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
+  license_file:
+    - {{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2
 
 extra:
   recipe-maintainers:
