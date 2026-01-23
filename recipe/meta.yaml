@@ -1,4 +1,4 @@
-{% set version = "1.9-16" %}
+{% set version = "1.9-17" %}
 {% set posix = 'm2-' if win else '' %}
 
 package:
@@ -9,10 +9,10 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/ptw_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/ptw/ptw_{{ version }}.tar.gz
-  sha256: 7e87c34b9eeaeabe3bfb937162e6cda4dd48d6bd6a97b9db8bb8303d131caa66
+  sha256: 3c5ff31b3d5e9a752fe632b7db00ac820a70b36dd52c1a96e502f34c0a8c5558
 
 build:
-  number: 4
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
